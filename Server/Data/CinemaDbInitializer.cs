@@ -26,16 +26,16 @@ namespace Server.Data {
             context.Movies.AddRange (movies);
 
             var rooms = new Room[] {
-                new Room (),
-                new Room (),
-                new Room ()
+                new Room (){NRows = 10, NColumns = 20},
+                new Room (){NRows = 10, NColumns = 10},
+                new Room (){NRows = 10, NColumns = 30}
             };
 
             context.Rooms.AddRange (rooms);
 
-            var seats = GenerateSeats (rooms[0], 10, 20);
-            seats.AddRange(GenerateSeats (rooms[1], 10, 10));
-            seats.AddRange(GenerateSeats (rooms[2], 10, 30));
+            var seats = GenerateSeats (rooms[0]);
+            seats.AddRange(GenerateSeats (rooms[1]));
+            seats.AddRange(GenerateSeats (rooms[2]));
 
             context.Seats.AddRange(seats);
 
@@ -239,10 +239,10 @@ namespace Server.Data {
             context.SaveChanges();
         }
 
-        private static List<Seat> GenerateSeats (Room room, int rows, int columns) {
+        private static List<Seat> GenerateSeats (Room room) {
             var seats = new List<Seat> ();
-            for (int i = 0; i < columns; i++) {
-                for (int j = 0; j < rows; j++) {
+            for (int i = 0; i < room.NColumns; i++) {
+                for (int j = 0; j < room.NRows; j++) {
                     var seat = new Seat () {
                         Room = room,
                         Column = i,

@@ -13,6 +13,8 @@ namespace Data {
 
         public CinemaDbContext (DbContextOptions<CinemaDbContext> options) : base (options) { }
         protected override void OnModelCreating (ModelBuilder modelBuilder) {
-         }
+            modelBuilder.Entity<Reservation> ()
+                .HasKey (r => new { r.ScreeningId, r.SeatId });
+        }
     }
 }
